@@ -1,4 +1,4 @@
-<form class="login100-form" autocomplete="off">
+<form [formGroup]="myForm" (ngSubmit)="register()" class="login100-form" autocomplete="off">
 
   <span class="login100-form-title p-b-49">
       Sign Up
@@ -6,25 +6,41 @@
 
   <div class="wrap-input100 m-b-23">
     <span class="label-input100">Nombre</span>
-    <input class="input100" type="text" name="firtsname" placeholder="Ingrese su Nombre">
+    <input class="input100"
+            type="text"
+            formControlName="firtsname"
+            placeholder="Ingrese su Nombre"
+            required>
     <span class="focus-input100"></span>
   </div>
 
   <div class="wrap-input50 m-b-23">
     <span class="label-input100">Apellidos</span>
-    <input class="input100" type="text" name="lastname" placeholder="Ingrese su Apellido">
+    <input class="input100"
+            type="text"
+            formControlName="lastname"
+            placeholder="Ingrese su Apellido"
+            required>
     <span class="focus-input100"></span>
   </div>
 
   <div class="wrap-input100 m-b-23">
       <span class="label-input100">Email</span>
-      <input class="input100" type="email" name="email" placeholder="Ingrese su email">
+      <input class="input100"
+              type="email"
+              formControlName="email"
+              placeholder="Ingrese su email"
+              required>
       <span class="focus-input100"></span>
   </div>
 
   <div class="wrap-input100">
       <span class="label-input100">Password</span>
-      <input class="input100" type="password" name="password" placeholder="Ingrese su contraseña">
+      <input class="input100"
+              type="password"
+              formControlName="password"
+              placeholder="Ingrese su contraseña"
+              required>
       <span class="focus-input100"></span>
   </div>
 
@@ -33,7 +49,7 @@
   <div class="container-login100-form-btn">
       <div class="wrap-login100-form-btn">
           <div class="login100-form-bgbtn"></div>
-          <button class="login100-form-btn">
+          <button [disabled]="myForm.invalid" class="login100-form-btn" type="submit">
               Register
           </button>
       </div>
