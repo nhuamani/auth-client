@@ -27,7 +27,7 @@ export class LoginComponent {
 
     const { email, password } = this.myForm.value
 
-    this.authService.login(email, password)
+    this.authService.logIn(email, password)
       .subscribe( success => {
 
         if ( success === true ) {
