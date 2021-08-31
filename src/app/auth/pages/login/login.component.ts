@@ -19,7 +19,7 @@ export class LoginComponent {
 
   constructor( private formBuilder: FormBuilder,
                 private router: Router,
-                private _authService: AuthService ) { }
+                private authService: AuthService ) { }
 
   login() {
 
@@ -27,12 +27,17 @@ export class LoginComponent {
 
     const { email, password } = this.myForm.value
 
-    this._authService.login(email, password).subscribe( data => {
-      console.log(data)
+    this.authService.login(email, password)
+      .subscribe( success => {
 
+        if ( success ) {
+          this.router.navigate(['dashboard'])
+        } else {
+          // TODO Mensaje de ERROR
+        }
     })
 
-    // this.router.navigate(['dashboard'])
+
   }
 
 }
