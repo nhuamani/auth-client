@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs'
 
@@ -31,6 +31,8 @@ export class AuthService {
 
           if ( resp.success ) {
 
+            localStorage.setItem('token', resp.token!)
+
             this._user = {
               firstname: resp.firstname!,
               lastname: resp.lastname!,
@@ -45,6 +47,19 @@ export class AuthService {
         map( resp => resp.success ),
         catchError( err => of(err.error.message) ) // on of() tranformamos el boolean a un Observable
       )
+
+  }
+
+
+  validateToken() {
+
+    const url = `${ this.baseUrl }/auth/token`
+
+    const headers = new HttpHeaders().set(
+      'x-token', localStorage.getItem('token') || ''
+    )
+
+    return this.http.get(url, { headers })
 
   }
 
