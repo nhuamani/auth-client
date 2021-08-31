@@ -1,9 +1,10 @@
 export interface AuthResponse {
-  success?: boolean;
+  success: boolean;
   uid?: string;
   firstname?: string;
   lastname?: string;
   token?: string;
+  newtoken?: string;
   message?: string;
 }
 

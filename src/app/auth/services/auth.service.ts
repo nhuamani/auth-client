@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs'
+import { Observable, of } from 'rxjs'
 
 import { environment } from 'src/environments/environment';
 import { AuthResponse, Usuario } from '../interfaces/interfaces';
@@ -19,6 +19,7 @@ export class AuthService {
   }
 
   constructor(private http: HttpClient) { }
+
 
   login( email: string, password: string ) {
 
@@ -39,8 +40,6 @@ export class AuthService {
               uid: resp.uid!,
             }
 
-            console.log(this._user)
-
           }
 
         }),
@@ -51,7 +50,7 @@ export class AuthService {
   }
 
 
-  validateToken() {
+  validateToken(): Observable<boolean> {
 
     const url = `${ this.baseUrl }/auth/token`
 
@@ -59,7 +58,22 @@ export class AuthService {
       'x-token', localStorage.getItem('token') || ''
     )
 
-    return this.http.get(url, { headers })
+    return this.http.get<AuthResponse> (url, { headers })
+            .pipe(
+              map( resp => {
+
+                localStorage.setItem('token', resp.newtoken! )
+
+                this._user = {
+                  uid: resp.uid!,
+                  firstname: resp.firstname!,
+                  lastname: resp.lastname!,
+                }
+
+                return resp.success
+              }),
+              catchError( err => of(false) )
+            )
 
   }
 

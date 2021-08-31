@@ -25,14 +25,10 @@ export class LoginComponent {
 
   login() {
 
-    console.log(this.myForm.value)
-
     const { email, password } = this.myForm.value
 
     this.authService.login(email, password)
       .subscribe( success => {
-
-        console.log(success)
 
         if ( success === true ) {
 
