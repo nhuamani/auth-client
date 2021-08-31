@@ -43,7 +43,7 @@ export class AuthService {
 
         }),
         map( resp => resp.success ),
-        catchError( err => of(false) ) // on of() tranformamos el boolean a un Observable
+        catchError( err => of(err.error.message) ) // on of() tranformamos el boolean a un Observable
       )
 
   }

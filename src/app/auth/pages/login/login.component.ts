@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ export class LoginComponent {
 
   constructor( private formBuilder: FormBuilder,
                 private router: Router,
-                private authService: AuthService ) { }
+                private authService: AuthService,
+                private toastr: ToastrService ) { }
 
   login() {
 
@@ -30,13 +32,20 @@ export class LoginComponent {
     this.authService.login(email, password)
       .subscribe( success => {
 
-        if ( success ) {
-          this.router.navigate(['dashboard'])
-        } else {
-          // TODO Mensaje de ERROR
-        }
-    })
+        console.log(success)
 
+        if ( success === true ) {
+
+          this.router.navigate(['dashboard'])
+          this.toastr.success(`${email}`, 'Welcome!!!')
+
+        } else {
+
+          this.toastr.error(`${success}`)
+
+        }
+
+    })
 
   }
 
