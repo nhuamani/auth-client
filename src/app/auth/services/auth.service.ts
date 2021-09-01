@@ -28,17 +28,11 @@ export class AuthService {
 
     return this.http.post<AuthResponse>(url, body)
       .pipe(
-        tap( resp => { // tap: encadena rxjs
+        tap( ({ success, token }) => { // tap: encadena rxjs
 
-          if ( resp.success ) {
+          if ( success ) {
 
-            localStorage.setItem('token', resp.token!)
-
-            this._user = {
-              firstname: resp.firstname!,
-              lastname: resp.lastname!,
-              uid: resp.uid!,
-            }
+            localStorage.setItem('token', token!)
 
           }
 
@@ -62,12 +56,6 @@ export class AuthService {
           if ( resp.success ) {
 
             localStorage.setItem('token', resp.token!)
-
-            this._user = {
-              firstname: resp.firstname!,
-              lastname: resp.lastname!,
-              uid: resp.uid!,
-            }
 
           }
 
@@ -102,6 +90,7 @@ export class AuthService {
 
                 this._user = {
                   uid: resp.uid!,
+                  email: resp.email!,
                   firstname: resp.firstname!,
                   lastname: resp.lastname!,
                 }

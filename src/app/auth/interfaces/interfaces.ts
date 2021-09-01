@@ -1,6 +1,7 @@
 export interface AuthResponse {
   success: boolean;
   uid?: string;
+  email?: string;
   firstname?: string;
   lastname?: string;
   token?: string;
@@ -10,6 +11,7 @@ export interface AuthResponse {
 
 export interface Usuario {
   uid: string;
+  email: string;
   firstname: string;
   lastname: string;
 }
