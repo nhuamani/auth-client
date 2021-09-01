@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: 'dashboard',
     loadChildren: () => import('./main/main.module').then( m => m.MainModule),
-    canActivate: [ValidateTokenGuard],
+    canActivate: [ ValidateTokenGuard ],
     canLoad: [ ValidateTokenGuard ]
   },
   {

@@ -21,6 +21,35 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
 
+  createUser( firstname: string, lastname: string, email: string,  password: string) {
+
+    const url = `${ this.baseUrl }/auth/new`
+    const body = { firstname, lastname, email, password }
+
+    return this.http.post<AuthResponse>(url, body)
+      .pipe(
+        tap( resp => { // tap: encadena rxjs
+
+          if ( resp.success ) {
+
+            localStorage.setItem('token', resp.token!)
+
+            this._user = {
+              firstname: resp.firstname!,
+              lastname: resp.lastname!,
+              uid: resp.uid!,
+            }
+
+          }
+
+        }),
+        map( resp => resp.success ), // OK
+        catchError( err => of(err.error.message) ) // ERROR
+      )
+
+  }
+
+
   logIn( email: string, password: string ) {
 
     const url = `${ this.baseUrl }/auth/login`
